@@ -1,11 +1,14 @@
-const Product = require('../models/productModels.js');
+// const Product = require('../models/productModels.js');
+const { findAllProducts } = require('../services');
 
 module.exports = {
   getAllProduct: async (req, res) => {
     try {
-      const products = await Product.find();
-      res.status(200).json(products);
-    } catch (error) {}
+      const allProduct = await findAllProducts();
+      res.status(200).json(allProduct);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   },
   getProudctById: async (req, res) => {
     try {
@@ -26,7 +29,7 @@ module.exports = {
       res.status(500).json({ message: error.message });
     }
   },
-  editProduct : async (req, res) => {
+  editProduct: async (req, res) => {
     try {
       const { id } = req.params;
       const product = await Product.findByIdAndUpdate(id, req.body);
@@ -43,7 +46,7 @@ module.exports = {
       res.status(500).json({ message: error.message });
     }
   },
-  deleteProduct : async (req, res) => {
+  deleteProduct: async (req, res) => {
     try {
       const { id } = req.params;
       const product = await Product.findByIdAndDelete(id);
@@ -52,11 +55,11 @@ module.exports = {
           .status(404)
           .json({ message: `can't find product with id: ${id}` });
       }
-  
+
       res.status(200).json(product);
     } catch (error) {
       console.log(error.message);
       res.status(500).json({ message: error.message });
     }
-  }
+  },
 };
