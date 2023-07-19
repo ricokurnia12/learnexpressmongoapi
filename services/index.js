@@ -8,6 +8,10 @@ module.exports = {
       throw error;
     }
   },
+ pagination :async (query = {}, limit, skip) => {
+    const products = await Product.find(query).limit(limit).skip(skip).exec();
+    return products;
+  },
   findProductById: async (id) => {
     try {
       return await Product.findById(id);

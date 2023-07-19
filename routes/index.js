@@ -5,10 +5,12 @@ const {
   getProudctById,
   editProduct,
   deleteProduct,
+  getPagination
 } = require('../controllers');
 
 
 router.get('/allproducts', getAllProduct);
+router.get('/pagination', getPagination)
 
 router.get('/product/:id', getProudctById);
 

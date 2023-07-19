@@ -5,7 +5,15 @@ const {
   addingProduct,
   editProductById,
   deleteProductById,
+  pagination,
 } = require('../services');
+
+const setPagination = (page, size) => {
+  const limit = size ? +size : ITEMS_PER_PAGE;
+  const skip = page ? (page - 1) * limit : 0;
+
+  return { limit, skip };
+};
 
 module.exports = {
   getAllProduct: async (req, res) => {
@@ -16,6 +24,20 @@ module.exports = {
       res.status(500).json(error);
     }
   },
+  getPagination: async (req, res)=>{
+    try {
+      
+      const { halaman, jumlahperhal } = req.query;
+      const { limit, skip } = setPagination(parseInt(halaman), parseInt(jumlahperhal));
+  
+      const allProduct = await pagination({}, limit, skip);
+      res.status(200).json(allProduct);
+
+    } catch (error) {
+      
+    }
+  }
+  ,
   getProudctById: async (req, res) => {
     try {
       const { id } = req.params;
