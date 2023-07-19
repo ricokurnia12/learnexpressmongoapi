@@ -8,13 +8,6 @@ const {
   pagination,
 } = require('../services');
 
-const setPagination = (page, size) => {
-  const limit = size ? +size : ITEMS_PER_PAGE;
-  const skip = page ? (page - 1) * limit : 0;
-
-  return { limit, skip };
-};
-
 module.exports = {
   getAllProduct: async (req, res) => {
     try {
@@ -24,20 +17,26 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-  getPagination: async (req, res)=>{
+  getPagination: async (req, res) => {
+    const ITEMS_PER_PAGE = 10;
+    const setPagination = (page, size) => {
+      const limit = size ? +size : ITEMS_PER_PAGE;
+      const skip = page ? (page - 1) * limit : 0;
+
+      return { limit, skip };
+    };
+
     try {
-      
       const { halaman, jumlahperhal } = req.query;
-      const { limit, skip } = setPagination(parseInt(halaman), parseInt(jumlahperhal));
-  
+      const { limit, skip } = setPagination(
+        parseInt(halaman),
+        parseInt(jumlahperhal)
+      );
+
       const allProduct = await pagination({}, limit, skip);
       res.status(200).json(allProduct);
-
-    } catch (error) {
-      
-    }
-  }
-  ,
+    } catch (error) {}
+  },
   getProudctById: async (req, res) => {
     try {
       const { id } = req.params;
