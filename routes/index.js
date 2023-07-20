@@ -1,23 +1,8 @@
-const router = require('express').Router();
-const {
-  getAllProduct,
-  addProduct,
-  getProudctById,
-  editProduct,
-  deleteProduct,
-  getPagination
-} = require('../controllers');
+const Router = require('express').Router();
+const productRoutes = require('./productRoutes');
+const userRoutes = require('./UserRoutes');
 
+Router.use('/product', productRoutes);
+Router.use('/user', userRoutes);
 
-router.get('/allproducts', getAllProduct);
-router.get('/pagination', getPagination)
-
-router.get('/product/:id', getProudctById);
-
-router.post('/addproduct', addProduct);
-
-router.put('/product/:id', editProduct);
-
-router.delete('/product/:id', deleteProduct);
-
-module.exports = router;
+module.exports = Router;

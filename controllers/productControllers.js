@@ -6,7 +6,7 @@ const {
   editProductById,
   deleteProductById,
   pagination,
-} = require('../services');
+} = require('../services/productservices');
 
 module.exports = {
   getAllProduct: async (req, res) => {
@@ -33,7 +33,7 @@ module.exports = {
         parseInt(jumlahperhal)
       );
 
-      const allProduct = await pagination( limit, skip);
+      const allProduct = await pagination(limit, skip);
       res.status(200).json(allProduct);
     } catch (error) {}
   },
@@ -60,14 +60,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const product = await editProductById(id, req.body, res);
-      // if (!product) {
-      //   return res
-      //     .status(500)
-      //     .json({
-      //       message: `can't find from service product with id: ${id}`,
-      //     });
-      // }
-
+     
       res.status(200).json(product);
     } catch (error) {
       console.log(error.message);

@@ -3,14 +3,15 @@ const express = require('express');
 const dotenv = require('dotenv');
 const dbconfig = require('./config/db');
 const app = express();
-const router = require('./routes');
+const Routes = require('./routes/');
+const userRoutes = require('./routes/UserRoutes');
 dotenv.config();
 
 const { PORT } = process.env;
 
 app.use(express.json());
 
-app.use(router);
+app.use(Routes);
 
 dbconfig();
 app.listen(PORT, () => {
