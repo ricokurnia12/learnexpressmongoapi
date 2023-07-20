@@ -8,8 +8,11 @@ module.exports = {
       throw error;
     }
   },
- pagination :async (query = {}, limit, skip) => {
-    const products = await Product.find(query).limit(limit).skip(skip).exec();
+  pagination: async (limit, skip) => {
+    const products = await Product.find()
+      .limit(limit)
+      .skip(skip)
+      .exec();
     return products;
   },
   findProductById: async (id) => {
@@ -28,25 +31,27 @@ module.exports = {
   },
   editProductById: async (id, body, res) => {
     try {
-       await Product.findByIdAndUpdate(id, body);
+      const product = await Product.findByIdAndUpdate(id, body, {
+        new: true,
+      });
       // cannot find a product
       // if (!product) {
       //   return res
       //     .status(500)
-      //     .json({ message: `can't find product with id: ${id}` });
+      //     .json({ message: `can't find from service product with id: ${id}` });
       // }
-      const updatedProduct = await Product.findById(id);
-      res.status(200).json(updatedProduct);
+      // const updatedProduct = await Product.findById(id);
+      // res.status(200).json(updatedProduct);
+      return product;
     } catch (error) {
       throw error;
     }
   },
-  deleteProductById :  async (id) =>{
+  deleteProductById: async (id) => {
     try {
       return await Product.findByIdAndDelete(id);
     } catch (error) {
-      throw error
+      throw error;
     }
-  }
-
+  },
 };

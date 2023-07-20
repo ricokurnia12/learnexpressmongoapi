@@ -33,7 +33,7 @@ module.exports = {
         parseInt(jumlahperhal)
       );
 
-      const allProduct = await pagination({}, limit, skip);
+      const allProduct = await pagination( limit, skip);
       res.status(200).json(allProduct);
     } catch (error) {}
   },
@@ -57,14 +57,23 @@ module.exports = {
     }
   },
   editProduct: async (req, res) => {
+    const { id } = req.params;
     try {
-      const { id } = req.params;
       const product = await editProductById(id, req.body, res);
+      // if (!product) {
+      //   return res
+      //     .status(500)
+      //     .json({
+      //       message: `can't find from service product with id: ${id}`,
+      //     });
+      // }
 
       res.status(200).json(product);
     } catch (error) {
       console.log(error.message);
-      res.status(500).json('cant find product');
+      res
+        .status(500)
+        .json(`can't find from service product with id: ${id}`);
     }
   },
   deleteProduct: async (req, res) => {
