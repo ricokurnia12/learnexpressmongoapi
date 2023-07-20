@@ -12,13 +12,13 @@ const {
 router.get('/allproducts', getAllProduct);
 router.get('/pagination', getPagination)
 
-router.get('/product/:id', getProudctById);
+router.get('/:id', getProudctById);
 
 router.post('/addproduct', addProduct);
 
-router.put('/product/:id', editProduct);
+router.put('/:id', editProduct);
 
-router.delete('/product/:id', deleteProduct);
+router.delete('/:id', deleteProduct);
 
 
 module.exports = router;

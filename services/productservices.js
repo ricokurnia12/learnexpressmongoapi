@@ -1,15 +1,15 @@
-const { Product, User } = require('../models');
+const { productModels } = require('../models');
 
 module.exports = {
   findAllProducts: async () => {
     try {
-      return await Product.find();
+      return await productModels.find();
     } catch (error) {
       throw error;
     }
   },
   pagination: async (limit, skip) => {
-    const products = await Product.find()
+    const products = await productModels.find()
       .limit(limit)
       .skip(skip)
       .exec();
@@ -17,24 +17,31 @@ module.exports = {
   },
   findProductById: async (id) => {
     try {
-      return await Product.findById(id);
+      return await productModels.findById(id);
     } catch (error) {
       throw error;
     }
   },
+  // addingProduct: async (body) => {
+  //   try {
+  //     return await productModels.create(body);
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // },
   addingProduct: async (body) => {
     try {
-      return await Product.create(body);
+      return await productModels.create(body);
     } catch (error) {
       throw error;
     }
   },
   editProductById: async (id, body, res) => {
     try {
-      const product = await Product.findByIdAndUpdate(id, body, {
+      const product = await productModels.findByIdAndUpdate(id, body, {
         new: true,
       });
-  
+
       return product;
     } catch (error) {
       throw error;
@@ -42,7 +49,7 @@ module.exports = {
   },
   deleteProductById: async (id) => {
     try {
-      return await Product.findByIdAndDelete(id);
+      return await productModels.findByIdAndDelete(id);
     } catch (error) {
       throw error;
     }
