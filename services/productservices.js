@@ -9,7 +9,8 @@ module.exports = {
     }
   },
   pagination: async (limit, skip) => {
-    const products = await productModels.find()
+    const products = await productModels
+      .find()
       .limit(limit)
       .skip(skip)
       .exec();
@@ -17,18 +18,11 @@ module.exports = {
   },
   findProductById: async (id) => {
     try {
-      return await productModels.findById(id);
+      return await productModels.findById(id).populate('id_user');
     } catch (error) {
       throw error;
     }
   },
-  // addingProduct: async (body) => {
-  //   try {
-  //     return await productModels.create(body);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // },
   addingProduct: async (body) => {
     try {
       return await productModels.create(body);
@@ -36,11 +30,16 @@ module.exports = {
       throw error;
     }
   },
+
   editProductById: async (id, body, res) => {
     try {
-      const product = await productModels.findByIdAndUpdate(id, body, {
-        new: true,
-      });
+      const product = await productModels.findByIdAndUpdate(
+        id,
+        body,
+        {
+          new: true,
+        }
+      );
 
       return product;
     } catch (error) {
