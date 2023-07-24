@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
     type: Date,
     required: false,
   },
+  passWord: {
+    type: String,
+    required: true,
+  },
 });
 
 const User = mongoose.model('User', userSchema);

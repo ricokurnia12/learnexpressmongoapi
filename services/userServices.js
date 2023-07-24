@@ -1,9 +1,9 @@
 const { userModels } = require('../models/index');
 
 module.exports = {
-  getAllUser : async () =>{
+  getAllUser: async () => {
     try {
-      return await userModels.find()
+      return await userModels.find();
     } catch (error) {
       throw error;
     }
@@ -11,6 +11,14 @@ module.exports = {
   userRegister: async (body) => {
     try {
       return await userModels.create(body);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  userLogin: async (body) => {
+    try {
+      return await userModels.find(body).exec();
     } catch (error) {
       throw error;
     }
