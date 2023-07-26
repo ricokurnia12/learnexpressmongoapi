@@ -4,6 +4,9 @@ const {
   userLogin,
 } = require('../services/userServices.js');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
+dotenv.config();
 
 module.exports = {
   register: async (req, res) => {
@@ -39,7 +42,14 @@ module.exports = {
       if (!match) {
         return res.status(400).json({ msg: 'Wrong Password' });
       }
-      res.status(200).json('berhasil login');
+
+      const token = jwt.sign(
+        { _id: user._id },
+        process.env.ACCESS_TOKEN_SECRET
+      );
+      res.header('auth-token', token).json({
+        token: token,
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

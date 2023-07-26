@@ -8,8 +8,9 @@ const {
   getPagination,
 } = require('../controllers/productControllers');
 const addProductValidation = require('../middleware/addProductValidation.js');
+const verifToken = require('../middleware/verifyToken');
 
-router.get('/allproducts', getAllProduct);
+router.get('/allproducts', verifToken, getAllProduct);
 router.get('/pagination', getPagination);
 
 router.get('/:id', getProudctById);

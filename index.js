@@ -11,8 +11,12 @@ const { PORT } = process.env;
 app.use(express.json());
 
 app.use(Routes);
+try {
+  dbconfig();
+} catch (error) {
+  console.log(error)
+}
 
-dbconfig();
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
 });
